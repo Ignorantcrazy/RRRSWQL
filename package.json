@@ -1,0 +1,9 @@
+{
+  "name": "RRRSWQL",
+  "version": "1.0.0",
+  "description": "reactjs react router Semantic UI webpack graphql",
+  "main": "main.js",
+  "repository": "https://github.com/Ignorantcrazy/RRRSWQL.git",
+  "author": "Ignorantcrazy <le_crazy@126.com>",
+  "license": "MIT"
+}

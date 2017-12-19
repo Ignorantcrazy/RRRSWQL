@@ -1,3 +1,11 @@
 node_modules
 .git
 dist
+/QLServer/QL.WebApi/Obj
+/QLServer/QL.WebApi/bin
+/QLServer/QL.Data/Obj
+/QLServer/QL.Data/bin
+/QLServer/QL.Core/Obj
+/QLServer/QL.Core/bin
+.vscode
+/QLServer/.vs

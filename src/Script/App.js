@@ -81,6 +81,7 @@ export default class App extends Component {
   state = {
     menuFixed: false,
     overlayFixed: false,
+    activeItem :'home'
   };
 
   handleOverlayRef = (c) => {
@@ -88,6 +89,11 @@ export default class App extends Component {
 
     if (!overlayRect) this.setState({ overlayRect: _.pick(c.getBoundingClientRect(), 'height', 'width') })
   }
+
+  handleItemClick = (e,{name}) =>{
+    
+    this.setState({activeItem:name})
+  } 
 
   stickOverlay = () => this.setState({ overlayFixed: true })
 
@@ -118,7 +124,7 @@ export default class App extends Component {
           onBottomVisible={this.unStickTopMenu}
           once={false}
         >
-          <Menu
+          <Menu pointing
             borderless
             fixed={menuFixed && 'top'}
             style={menuFixed ? fixedMenuStyle : menuStyle}
@@ -128,8 +134,25 @@ export default class App extends Component {
                 <Image size='mini' src={logo} />
               </Menu.Item>
               <Menu.Item header>RRRWSQL</Menu.Item>
-              <Menu.Item as='a'>首页</Menu.Item>
-              <Menu.Item as='a'>推荐</Menu.Item>
+              <Menu.Item name='home' as='a' active={activeItem === 'home'} onClick={this.handleItemClick}>首页</Menu.Item>
+              <Menu.Item name='push' as='a' active={activeItem === 'push'} >猜你喜欢</Menu.Item>
+              {/* <Dropdown text='Dropdown' pointing className='分类'>
+                  <Dropdown.Menu>
+                    <Dropdown.Item name='gx'>搞笑</Dropdown.Item>
+                    <Dropdown.Item>List Item</Dropdown.Item>
+                    <Dropdown.Divider />
+                    <Dropdown.Header>Header Item</Dropdown.Header>
+                    <Dropdown.Item>
+                      <i className='dropdown icon' />
+                      <span className='text'>Submenu</span>
+                      <Dropdown.Menu>
+                        <Dropdown.Item>List Item</Dropdown.Item>
+                        <Dropdown.Item>List Item</Dropdown.Item>
+                      </Dropdown.Menu>
+                    </Dropdown.Item>
+                    <Dropdown.Item>List Item</Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown> */}
               <Menu.Menu position='right'>
                 <Menu.Item>
                   <Input className='icon' icon='search' placeholder='Search...' />

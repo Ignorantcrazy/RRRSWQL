@@ -104,7 +104,7 @@ export default class App extends Component {
   unStickTopMenu = () => this.setState({ menuFixed: false })
 
   render() {
-    const { menuFixed, overlayFixed, overlayRect } = this.state
+    const { menuFixed, overlayFixed, overlayRect,activeItem  } = this.state
 
     return (
       <div>

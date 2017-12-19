@@ -1,9 +1,10 @@
 import _ from 'lodash'
 import React, { Component } from 'react'
-import logo from './logo.png'
-import squareImage from './square-image.png'
+import logo from '../Image/logo.png'
+import squareImage from '../Image/square-image.png'
+import elliot from '../Image/elliot.jpg'
 import {
-  Container, Divider, Dropdown, Grid, Header, Icon, Image, List, Menu, Segment, Visibility,
+  Container, Divider, Dropdown, Grid, Header, Icon, Image, List, Menu, Segment, Visibility,Input,Button
 } from 'semantic-ui-react'
 
 const menuStyle = {
@@ -11,7 +12,6 @@ const menuStyle = {
   borderRadius: 0,
   boxShadow: 'none',
   marginBottom: '1em',
-  marginTop: '4em',
   transition: 'box-shadow 0.5s ease, padding 0.5s ease',
 }
 
@@ -105,17 +105,11 @@ export default class App extends Component {
         {/* Heads up, style below isn't necessary for correct work of example, simply our docs defines other
             background color.
           */}
-        <style>{`
+        {/* <style>{`
           html, body {
             background: #fff;
           }
-        `}</style>
-
-        <Container text style={{ marginTop: '2em' }}>
-          <Header as='h1'>Sticky Example</Header>
-          <p>This example shows how to use lazy loaded images, a sticky menu, and a simple text container</p>
-        </Container>
-
+        `}</style> */}
         {/* Attaching the top menu is a simple operation, we only switch `fixed` prop add add another styles if it has
             gone beyond the scope of visibility
           */}
@@ -133,28 +127,16 @@ export default class App extends Component {
               <Menu.Item>
                 <Image size='mini' src={logo} />
               </Menu.Item>
-              <Menu.Item header>Project Name</Menu.Item>
-              <Menu.Item as='a'>Blog</Menu.Item>
-              <Menu.Item as='a'>Articles</Menu.Item>
-
+              <Menu.Item header>RRRWSQL</Menu.Item>
+              <Menu.Item as='a'>首页</Menu.Item>
+              <Menu.Item as='a'>推荐</Menu.Item>
               <Menu.Menu position='right'>
-                <Dropdown text='Dropdown' pointing className='link item'>
-                  <Dropdown.Menu>
-                    <Dropdown.Item>List Item</Dropdown.Item>
-                    <Dropdown.Item>List Item</Dropdown.Item>
-                    <Dropdown.Divider />
-                    <Dropdown.Header>Header Item</Dropdown.Header>
-                    <Dropdown.Item>
-                      <i className='dropdown icon' />
-                      <span className='text'>Submenu</span>
-                      <Dropdown.Menu>
-                        <Dropdown.Item>List Item</Dropdown.Item>
-                        <Dropdown.Item>List Item</Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown.Item>
-                    <Dropdown.Item>List Item</Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
+                <Menu.Item>
+                  <Input className='icon' icon='search' placeholder='Search...' />
+                </Menu.Item>
+                <Menu.Item>
+                  <Image size='mini' src={elliot} />
+                </Menu.Item>
               </Menu.Menu>
             </Container>
           </Menu>

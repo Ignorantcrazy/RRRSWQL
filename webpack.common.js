@@ -4,14 +4,14 @@ const htmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry:{
-        main:'./src/index.js'
+        main:'./src/Script/index.js'
     },
     plugins:[
         new cleanWebpackPlugin(['dist']),
         new htmlWebpackPlugin({
             title: 'RRRSWQL',
-            template: 'template/template.html',
-            favicon:'./src/AppIcon.ico',
+            template: 'src/template/template.html',
+            favicon:'./src/Image/AppIcon.ico',
             filename:'index.html',
         })
     ],
@@ -34,7 +34,7 @@ module.exports = {
                 ]
             },
             {
-                test:/\.(png|svg|jpb|gif)$/,
+                test:/\.(png|svg|jpb|gif|jpg)$/,
                 use:['file-loader']
             },
             {

@@ -1,5 +1,7 @@
 import _ from 'lodash'
 import React, { Component } from 'react'
+import logo from './logo.png'
+import squareImage from './square-image.png'
 import {
   Container, Divider, Dropdown, Grid, Header, Icon, Image, List, Menu, Segment, Visibility,
 } from 'semantic-ui-react'
@@ -25,7 +27,7 @@ const overlayStyle = {
 }
 
 const fixedOverlayStyle = {
-  ...overlayStyle,
+  overlayStyle,
   position: 'fixed',
   top: '80px',
   zIndex: 10,
@@ -38,7 +40,7 @@ const overlayMenuStyle = {
 }
 
 const fixedOverlayMenuStyle = {
-  ...overlayMenuStyle,
+  overlayMenuStyle,
   left: '800px',
 }
 
@@ -46,7 +48,7 @@ const LeftImage = () => (
   <Image
     floated='left'
     size='medium'
-    src='/assets/images/wireframe/square-image.png'
+    src={squareImage}
     style={{ margin: '2em 2em 2em -4em' }}
   />
 )
@@ -55,7 +57,7 @@ const RightImage = () => (
   <Image
     floated='right'
     size='medium'
-    src='/assets/images/wireframe/square-image.png'
+    src={squareImage}
     style={{ margin: '2em -4em 2em 2em' }}
   />
 )
@@ -79,7 +81,7 @@ export default class App extends Component {
   state = {
     menuFixed: false,
     overlayFixed: false,
-  }
+  };
 
   handleOverlayRef = (c) => {
     const { overlayRect } = this.state
@@ -129,7 +131,7 @@ export default class App extends Component {
           >
             <Container text>
               <Menu.Item>
-                <Image size='mini' src='/logo.png' />
+                <Image size='mini' src={logo} />
               </Menu.Item>
               <Menu.Item header>Project Name</Menu.Item>
               <Menu.Item as='a'>Blog</Menu.Item>
@@ -171,7 +173,7 @@ export default class App extends Component {
             once={false}
             onTopPassed={this.stickOverlay}
             onTopVisible={this.unStickOverlay}
-            style={overlayFixed ? { ...overlayStyle, ...overlayRect } : {}}
+            style={overlayFixed ? { overlayStyle, overlayRect } : {}}
           />
 
           <div
@@ -257,7 +259,7 @@ export default class App extends Component {
               </Grid.Row>
             </Grid>
             <Divider inverted section />
-            <Image src='/logo.png' centered size='mini' />
+            <Image src={logo} centered size='mini' />
             <List horizontal inverted divided link>
               <List.Item as='a' href='#'>Site Map</List.Item>
               <List.Item as='a' href='#'>Contact Us</List.Item>

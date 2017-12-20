@@ -8,6 +8,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using QL.WebAPI.Models;
+using QL.Core.Data;
+using QL.Data.EntityFramework;
+using Microsoft.EntityFrameworkCore;
+using QL.Data.EntityFramework.Repositories;
+using GraphQL;
+using GraphQL.Types;
 
 namespace QL.WebAPI
 {
@@ -24,6 +31,13 @@ namespace QL.WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.AddScoped<QLQuery>();
+            services.AddTransient<IDroidRepository, DroidRepository>();
+            services.AddDbContext<QLContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddScoped<IDocumentExecuter,DocumentExecuter>();
+            services.AddTransient<DroidType>();
+            var sp = services.BuildServiceProvider();
+            services.AddScoped<ISchema>(_ => new QLSchema(type => (GraphType)sp.GetService(type)) { Query = sp.GetService<QLQuery>() });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\QL.Core\QL.Core.csproj" />
+    <ProjectReference Include="..\QL.Data\QL.Data.csproj" />
   </ItemGroup>
 
 </Project>

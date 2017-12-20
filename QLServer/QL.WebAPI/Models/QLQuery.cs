@@ -9,11 +9,15 @@ namespace QL.WebAPI.Models
 {
     public class QLQuery : ObjectGraphType
     {
-        public QLQuery()
+        public QLQuery() { }
+        public QLQuery(Core.Data.IDroidRepository droidRepository)
         {
             Field<DroidType>(
                 "hero",
-                resolve: context => new Droid {Id = 1,Name = "R2-D2" }
+                //arguments: new QueryArguments(
+                //    new QueryArgument<DroidType> {Name="Id", Description="id" }
+                //    ),
+                resolve: context => droidRepository.Get(1).Result
                 );
         }
     }

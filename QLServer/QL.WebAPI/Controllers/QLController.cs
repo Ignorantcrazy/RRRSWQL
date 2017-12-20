@@ -6,6 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 using QL.WebAPI.Models;
 using GraphQL.Types;
 using GraphQL;
+using QL.Core.Data;
+using QL.Data.InMemory;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -14,46 +18,51 @@ namespace QL.WebAPI.Controllers
     [Route("api/[controller]")]
     public class QLController : Controller
     {
-        // GET: api/values
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private IDocumentExecuter _DocumentExecuter { get; set; }
+        private ISchema _Schema { get; set; }
+        //private readonly ILogger _Logger;
+        //public QLController(/*IDocumentExecuter documentExecuter, ISchema schema, */ILogger<QLController> logger)
+        //{
+        //    //_DocumentExecuter = documentExecuter;
+        //    //_Schema = schema;
+        //    _Logger = logger;
+        //}
+       
+
+        public QLController( IDocumentExecuter documentExecuter, ISchema schema)
         {
-            return new string[] { "value1", "value2" };
+            
+            _DocumentExecuter = documentExecuter;
+            _Schema = schema;
         }
 
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
 
         // POST api/values
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]QLQueryModel query)
         {
-            var schema = new Schema {Query = new QLQuery() };
-            var result = await new DocumentExecuter().ExecuteAsync(_ => { 
-                _.Schema = schema;
-                _.Query = query.Query;
-            }).ConfigureAwait(false);
-            if (result.Errors?.Count > 0)
+            if (query == null)
             {
-                return BadRequest();
+                throw new ArgumentNullException(nameof(query));
             }
-            return Ok(result);
-        }
+            var executionOptions = new ExecutionOptions {Schema = _Schema, Query = query.Query };
 
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            try
+            {
+                var result = await _DocumentExecuter.ExecuteAsync(executionOptions).ConfigureAwait(false);
+                if (result.Errors?.Count > 0)
+                {
+                    //_Logger.LogError("GraphQL errors: {0}", result.Errors);
+                    return BadRequest();
+                }
+                //_Logger.LogDebug("GraphQL execution result: {result}", JsonConvert.SerializeObject(result.Data));
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                //_Logger.LogError("Document exexuter exception", ex);
+                return BadRequest(ex);
+            }
         }
     }
 }

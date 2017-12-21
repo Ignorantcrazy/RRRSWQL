@@ -14,10 +14,15 @@ namespace QL.Data.EntityFramework
         }
 
         public DbSet<Droid> Droids { get; set; }
+        public DbSet<Friend> Friends { get; set; }
 
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    //modelBuilder.Entity<Droid>().ToTable("Course");
-        //}
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            //modelBuilder.Entity<Droid>().ToTable("Course");
+            modelBuilder.Entity<Droid>().HasKey("Id");
+            modelBuilder.Entity<Droid>().Property(e => e.Id).ValueGeneratedNever();
+
+            //modelBuilder.Entity<Droid>().HasMany(e => e.Friends).WithOne(j => j.Droids);
+        }
     }
 }

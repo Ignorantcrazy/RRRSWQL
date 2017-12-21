@@ -7,7 +7,6 @@ using QL.WebAPI.Models;
 using GraphQL.Types;
 using GraphQL;
 using QL.Core.Data;
-using QL.Data.InMemory;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
@@ -20,7 +19,7 @@ namespace QL.WebAPI.Controllers
     {
         private IDocumentExecuter _DocumentExecuter { get; set; }
         private ISchema _Schema { get; set; }
-        //private readonly ILogger _Logger;
+        private readonly ILogger _Logger;
         //public QLController(/*IDocumentExecuter documentExecuter, ISchema schema, */ILogger<QLController> logger)
         //{
         //    //_DocumentExecuter = documentExecuter;
@@ -29,11 +28,12 @@ namespace QL.WebAPI.Controllers
         //}
        
 
-        public QLController( IDocumentExecuter documentExecuter, ISchema schema)
+        public QLController( IDocumentExecuter documentExecuter, ISchema schema,ILogger<QLController> logger)
         {
             
             _DocumentExecuter = documentExecuter;
             _Schema = schema;
+            _Logger = logger;
         }
 
 
@@ -52,15 +52,15 @@ namespace QL.WebAPI.Controllers
                 var result = await _DocumentExecuter.ExecuteAsync(executionOptions).ConfigureAwait(false);
                 if (result.Errors?.Count > 0)
                 {
-                    //_Logger.LogError("GraphQL errors: {0}", result.Errors);
+                    _Logger.LogError("GraphQL errors: {0}", result.Errors);
                     return BadRequest();
                 }
-                //_Logger.LogDebug("GraphQL execution result: {result}", JsonConvert.SerializeObject(result.Data));
+                _Logger.LogDebug("GraphQL execution result: {result}", JsonConvert.SerializeObject(result.Data));
                 return Ok(result);
             }
             catch (Exception ex)
             {
-                //_Logger.LogError("Document exexuter exception", ex);
+                _Logger.LogError("Document exexuter exception", ex);
                 return BadRequest(ex);
             }
         }

@@ -13,11 +13,34 @@ namespace QL.Data.EntityFramework.Seed
         {
             if (!db.Droids.Any())
             {
-                var droid = new Droid
+                Droid droid = new Droid
                 {
                     Name = "R2-D2"
                 };
                 db.Droids.Add(droid);
+                droid = new Droid
+                {
+                    Name = "R3-D3"
+                };
+                db.Droids.Add(droid);
+                droid = new Droid
+                {
+                    Name = "R4-D4"
+                };
+                db.Droids.Add(droid);
+                db.SaveChanges();
+            }
+
+            if (!db.Friends.Any())
+            {
+                Friend friend =   new Friend{ Name = "R2-A",Sex = 0};
+                db.Friends.Add(friend);
+                friend = new Friend { Name = "R2-B", Sex = 0 };
+                db.Friends.Add(friend);
+                friend = new Friend { Name = "R2-C", Sex = 1 };
+                db.Friends.Add(friend);
+                friend = new Friend { Name = "R2-D", Sex = 1 };
+                db.Friends.Add(friend);
                 db.SaveChanges();
             }
         }

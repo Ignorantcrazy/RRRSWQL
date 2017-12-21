@@ -5,11 +5,12 @@ using System.Text;
 
 namespace QL.Core.Models
 {
-    public class Droid : IEntity<int>
+    public class Friend : IEntity<int>
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public int Sex { get; set; }
 
-        //public ICollection<Friend> Friends { get; set; }
+        //public ICollection<Droid> Droids { get; set; }
     }
 }

@@ -8,17 +8,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace QL.Data.EntityFramework.Repositories
 {
-    public class DroidRepository : IDroidRepository
+    public class DroidRepository : BaseRepository<Droid,int>, IDroidRepository
     {
-        private QLContext _DB { get; set; }
-
-        public DroidRepository(QLContext db)
-        {
-            _DB = db;
-        }
-        public Task<Droid> Get(int id)
-        {
-            return _DB.Droids.FirstOrDefaultAsync(m => m.Id == id);
-        }
+        public DroidRepository() { }
+        public DroidRepository(QLContext db) : base(db) { }
     }
 }

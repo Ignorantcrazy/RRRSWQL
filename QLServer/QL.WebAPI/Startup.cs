@@ -33,9 +33,12 @@ namespace QL.WebAPI
             services.AddMvc();
             services.AddScoped<QLQuery>();
             services.AddTransient<IDroidRepository, DroidRepository>();
+            services.AddTransient<IFriendRepository, FriendRepository>();
             services.AddDbContext<QLContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<IDocumentExecuter,DocumentExecuter>();
             services.AddTransient<DroidType>();
+            services.AddTransient<FriendType>();
+            services.AddTransient<FriendSexEnum>();
             var sp = services.BuildServiceProvider();
             services.AddScoped<ISchema>(_ => new QLSchema(type => (GraphType)sp.GetService(type)) { Query = sp.GetService<QLQuery>() });
         }

@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace QL.Core.Data
 {
-    public interface IDroidRepository : IBaseRepository<Droid,int>
+    public interface IFriendRepository : IBaseRepository<Friend,int>
     {
+        Task<List<Friend>> GetFriendBySex(int sex);
     }
 }

@@ -1,5 +1,5 @@
 ﻿using GraphQL.Types;
-using QL.Core.Models;
+using QL.Data.EntityFramework.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +14,8 @@ namespace QL.WebAPI.Models
             Field(x => x.Id);
             Field(x => x.Name, nullable: true);
             Field(x => x.Sex, nullable: true);
+            Field(x => x.DroidId, nullable: true);
+            Field(x => x.DroidName, nullable: true);
         }
     }
 }

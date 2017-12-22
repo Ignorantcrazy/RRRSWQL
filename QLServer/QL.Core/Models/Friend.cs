@@ -11,6 +11,8 @@ namespace QL.Core.Models
         public string Name { get; set; }
         public int Sex { get; set; }
 
+        public Droid Droid { get; set; }
+
         //public ICollection<Droid> Droids { get; set; }
     }
 }

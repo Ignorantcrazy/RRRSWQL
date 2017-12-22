@@ -1,4 +1,5 @@
-﻿using GraphQL.Types;
+﻿using AutoMapper;
+using GraphQL.Types;
 using QL.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace QL.WebAPI.Models
     public class QLQuery : ObjectGraphType
     {
         public QLQuery() { }
-        public QLQuery(Core.Data.IDroidRepository droidRepository,Core.Data.IFriendRepository friendRepository)
+        public QLQuery(Core.Data.IDroidRepository droidRepository,Core.Data.IFriendRepository friendRepository,IMapper mapper)
         {
             Field<DroidType>(
                 "hero",
@@ -25,8 +26,12 @@ namespace QL.WebAPI.Models
 
             Field<ListGraphType<DroidType>>(
                 "heros",
-                resolve : context => droidRepository.GetAll().Result
-                );
+                resolve : context =>
+                {
+                    var droid = droidRepository.GetAll();
+                    var mapped = mapper.Map<List<Droid>>(droid);
+                    return mapped;
+                });
 
             Field<FriendType>(
                 "friend",
@@ -36,8 +41,9 @@ namespace QL.WebAPI.Models
                 resolve: context =>
                 {
                     var id = context.GetArgument<int>("id");
-                   
-                        return friendRepository.Get(id).Result;
+                    var result = friendRepository.Get(id,include: "Droid").Result;
+                    var mapped = mapper.Map<Friend>(result);
+                    return mapped;
                 });
 
             Field<ListGraphType<FriendType>>(
@@ -50,9 +56,13 @@ namespace QL.WebAPI.Models
                     var sex = context.GetArgument<FriendSex?>("sex");
                     if (sex.HasValue)
                     {
-                        return friendRepository.GetFriendBySex((int)sex.Value).Result;
+                        var sexfriends = friendRepository.GetFriendBySex((int)sex.Value,"Droid").Result;
+                        var sexmapped = mapper.Map<List<Friend>>(sexfriends);
+                        return sexmapped;
                     }
-                    return friendRepository.GetAll().Result;
+                    var friends = friendRepository.GetAll("Droid").Result;
+                    var mapped = mapper.Map<List<Friend>>(friends);
+                    return mapped;
                 });
         }
     }

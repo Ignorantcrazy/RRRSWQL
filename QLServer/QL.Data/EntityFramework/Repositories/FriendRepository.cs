@@ -19,5 +19,15 @@ namespace QL.Data.EntityFramework.Repositories
         {
             return _db.Friends.Where(x => x.Sex == sex).ToListAsync();
         }
+
+        public Task<List<Friend>> GetFriendBySex(int sex, string include)
+        {
+            return _db.Friends.Include(include).Where(x => x.Sex == sex).ToListAsync();
+        }
+
+        public Task<List<Friend>> GetFriendsByDroidId(int id,string include)
+        {
+            return _db.Friends.Include(include).Where(x => x.Droid.Id == id).ToListAsync();
+        }
     }
 }

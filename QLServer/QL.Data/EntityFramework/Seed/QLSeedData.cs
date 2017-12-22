@@ -15,16 +15,19 @@ namespace QL.Data.EntityFramework.Seed
             {
                 Droid droid = new Droid
                 {
+                    Id = 1,
                     Name = "R2-D2"
                 };
                 db.Droids.Add(droid);
                 droid = new Droid
                 {
+                    Id = 2,
                     Name = "R3-D3"
                 };
                 db.Droids.Add(droid);
                 droid = new Droid
                 {
+                    Id = 3,
                     Name = "R4-D4"
                 };
                 db.Droids.Add(droid);
@@ -33,13 +36,13 @@ namespace QL.Data.EntityFramework.Seed
 
             if (!db.Friends.Any())
             {
-                Friend friend =   new Friend{ Name = "R2-A",Sex = 0};
+                Friend friend = new Friend {Id = 1, Name = "R2-A", Sex = 0, Droid = new Droid { Id = 1, Name = "R2-D2" } };
                 db.Friends.Add(friend);
-                friend = new Friend { Name = "R2-B", Sex = 0 };
+                friend = new Friend { Id = 2, Name = "R2-B", Sex = 0, Droid = new Droid { Id = 1, Name = "R2-D2" } };
                 db.Friends.Add(friend);
-                friend = new Friend { Name = "R2-C", Sex = 1 };
+                friend = new Friend { Id = 3, Name = "R2-C", Sex = 1, Droid = new Droid { Id = 2, Name = "R3-D3" } };
                 db.Friends.Add(friend);
-                friend = new Friend { Name = "R2-D", Sex = 1 };
+                friend = new Friend { Id = 4, Name = "R2-D", Sex = 1, Droid = new Droid { Id = 3, Name = "R4-D4" } };
                 db.Friends.Add(friend);
                 db.SaveChanges();
             }

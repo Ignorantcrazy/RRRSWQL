@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using QL.Data.EntityFramework.Repositories;
 using GraphQL;
 using GraphQL.Types;
+using AutoMapper;
 
 namespace QL.WebAPI
 {
@@ -31,6 +32,7 @@ namespace QL.WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.AddAutoMapper(typeof(Startup));
             services.AddScoped<QLQuery>();
             services.AddTransient<IDroidRepository, DroidRepository>();
             services.AddTransient<IFriendRepository, FriendRepository>();

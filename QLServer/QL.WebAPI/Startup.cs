@@ -34,15 +34,17 @@ namespace QL.WebAPI
             services.AddMvc();
             services.AddAutoMapper(typeof(Startup));
             services.AddScoped<QLQuery>();
+            services.AddScoped<QLMutation>();
             services.AddTransient<IDroidRepository, DroidRepository>();
             services.AddTransient<IFriendRepository, FriendRepository>();
             services.AddDbContext<QLContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<IDocumentExecuter,DocumentExecuter>();
             services.AddTransient<DroidType>();
+            services.AddTransient<DroidInputType>();
             services.AddTransient<FriendType>();
             services.AddTransient<FriendSexEnum>();
             var sp = services.BuildServiceProvider();
-            services.AddScoped<ISchema>(_ => new QLSchema(type => (GraphType)sp.GetService(type)) { Query = sp.GetService<QLQuery>() });
+            services.AddScoped<ISchema>(_ => new QLSchema(type => (GraphType)sp.GetService(type)) { Query = sp.GetService<QLQuery>(),Mutation = sp.GetService<QLMutation>() });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

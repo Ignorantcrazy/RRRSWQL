@@ -8,11 +8,12 @@ using System.Threading.Tasks;
 
 namespace QL.WebAPI.Models
 {
-    public class QLQuery : ObjectGraphType
+    public class QLQuery : ObjectGraphType<object>
     {
         public QLQuery() { }
         public QLQuery(Core.Data.IDroidRepository droidRepository,Core.Data.IFriendRepository friendRepository,IMapper mapper)
         {
+            Name = "Query";
             Field<DroidType>(
                 "hero",
                 arguments: new QueryArguments(
@@ -21,16 +22,23 @@ namespace QL.WebAPI.Models
                 resolve: context => 
                 {
                     var id = context.GetArgument<int>("id");
-                    return droidRepository.Get(id).Result;
+                    var droid = droidRepository.Get(id).Result;
+                    var mapped = mapper.Map<Droid>(droid);
+                    return mapped;
                 });
 
             Field<ListGraphType<DroidType>>(
                 "heros",
                 resolve : context =>
                 {
-                    var droid = droidRepository.GetAll();
-                    var mapped = mapper.Map<List<Droid>>(droid);
+                    var droids = droidRepository.GetAll().Result;
+                    var mapped = mapper.Map<List<Droid>>(droids);
                     return mapped;
+                    //var droidsview = new List<Droid>();
+                    //foreach (var item in droids.Result)
+                    //{
+                    //    droidsview.Add()
+                    //}
                 });
 
             Field<FriendType>(

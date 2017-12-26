@@ -11,6 +11,7 @@ namespace QL.WebAPI.Models
         public QLSchema(Func<Type, GraphType> resolveType) : base(resolveType)
         {
             Query = (QLQuery)resolveType(typeof(QLQuery));
+            Mutation = (QLMutation)resolveType(typeof(QLMutation));
         }
     }
 }

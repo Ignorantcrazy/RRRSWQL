@@ -15,7 +15,7 @@ namespace QL.WebAPI.Models
         {
             Field(x => x.Id).Description("the id of the droid");
             Field(x => x.Name, nullable: true).Description("the name of the droid");
-            Field<ListGraphType<ObjectGraphType<Friend>>>(
+            Field<ListGraphType<FriendType>>(
                 "friends",
                 resolve:context =>
                 {

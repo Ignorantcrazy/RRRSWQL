@@ -11,13 +11,13 @@ namespace QL.WebAPI
     {
         public MappingProfile()
         {
+            CreateMap<Core.Models.Droid, Models.Droid>(MemberList.Destination)
+                .ForMember(dest => dest.Friends, opt => opt.Ignore());
+
             //friend
             CreateMap<Core.Models.Friend, Models.Friend>(MemberList.Destination)
                 .ForMember(dest => dest.DroidId, opt => opt.MapFrom(src => src.Droid.Id))
                 .ForMember(dest => dest.DroidName, opt => opt.MapFrom(src => src.Droid.Name));
-
-            CreateMap<Core.Models.Droid, Models.Droid>(MemberList.Destination)
-                .ForMember(dest => dest.Friends,opt => opt.Ignore());
         }
     }
 }

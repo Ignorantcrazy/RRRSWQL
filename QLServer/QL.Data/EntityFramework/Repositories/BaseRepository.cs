@@ -16,6 +16,26 @@ namespace QL.Data.EntityFramework.Repositories
         {
             _DB = db;
         }
+
+        public TEntity Add(TEntity entity)
+        {
+            _DB.Set<TEntity>().Add(entity);
+            return entity;
+        }
+
+        public IEnumerable<TEntity> AddRange(IEnumerable<TEntity> entity)
+        {
+            _DB.Set<TEntity>().AddRange(entity);
+            return entity;
+        }
+
+        public void Delete(TKey id)
+        {
+            var entity = new TEntity {Id = id };
+            _DB.Set<TEntity>().Attach(entity);
+            _DB.Set<TEntity>().Remove(entity);
+        }
+
         public Task<TEntity> Get(TKey id)
         {
             return _DB.Set<TEntity>().SingleOrDefaultAsync(c => c.Id.Equals(id));
@@ -34,6 +54,17 @@ namespace QL.Data.EntityFramework.Repositories
         public Task<List<TEntity>> GetAll(string include)
         {
             return _DB.Set<TEntity>().Include(include).ToListAsync();
+        }
+
+        public async Task<bool> SaveChangesAsync()
+        {
+            return (await _DB.SaveChangesAsync()) > 0;
+        }
+
+        public void Update(TEntity entity)
+        {
+            _DB.Set<TEntity>().Attach(entity);
+            _DB.Entry(entity).State = EntityState.Modified;
         }
     }
 }

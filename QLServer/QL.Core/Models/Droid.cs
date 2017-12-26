@@ -9,9 +9,6 @@ namespace QL.Core.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-
-        public ICollection<Friend> Friends { get; set; }
-
-        //public ICollection<Friend> Friends { get; set; }
+        public List<Friend> Friends { get; set; }
     }
 }

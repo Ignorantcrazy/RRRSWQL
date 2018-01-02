@@ -1,10 +1,11 @@
 const MenuData = {
     menuLinks : [
-        {name:"Home",active:true,text:"主页"},
-        {name:"LookingAround",active:false,text:"随便看看"},
+        {name:"home",active:true,text:"主页"},
+        {name:"lookingAround",active:false,text:"随便看看"},
     ],
     menuMessages : [
-        {name:"alarm",size:"big"}
+        {name:"alarm",size:"big",link:"/message"},
+        {name:"add circle" ,size:"big",link:"/addCircle"}
     ],
     menuUser : {
         src:"elliot.jpg"

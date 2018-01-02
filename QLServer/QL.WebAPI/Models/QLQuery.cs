@@ -11,9 +11,47 @@ namespace QL.WebAPI.Models
     public class QLQuery : ObjectGraphType<object>
     {
         public QLQuery() { }
-        public QLQuery(Core.Data.IDroidRepository droidRepository,Core.Data.IFriendRepository friendRepository,IMapper mapper)
+        public QLQuery(Core.Data.IDroidRepository droidRepository,Core.Data.IFriendRepository friendRepository,
+            Core.Data.IArticaleRepository articaleRepository,Core.Data.IClassificationRepository classificationRepository,
+            Core.Data.IUserRepository userRepository,
+            IMapper mapper)
         {
             Name = "Query";
+
+            Field<ListGraphType<ArticaleType>>(
+                "articles",
+                arguments: new QueryArguments(
+                    new QueryArgument<IntGraphType> {Name= "classificationId" },
+                    new QueryArgument<IntGraphType> {Name= "userId" }
+                    ),
+                resolve: context => {
+                    var classificationId = context.GetArgument<int?>("classificationId");
+                    var userId = context.GetArgument<int?>("userId");
+                    var articles = articaleRepository.GetAll(classificationId, userId,"Classification", "User").Result;
+                    var mapped = mapper.Map<List<Articale>>(articles);
+                    return mapped;
+            });
+
+            Field<ListGraphType<ClassificationType>>(
+                "classifications",
+                resolve:context => {
+                    var classifications = classificationRepository.GetAll().Result;
+                    var mapped = mapper.Map<List<Classification>>(classifications);
+                    return mapped;
+                });
+
+            Field<UserType>(
+                "user",
+                arguments: new QueryArguments(
+                    new QueryArgument<NonNullGraphType<IntGraphType>> { Name = "id"}
+                    ),
+                resolve: context => {
+                    var id = context.GetArgument<int>("id");
+                    var user = userRepository.Get(id).Result;
+                    var mapped = mapper.Map<User>(user);
+                    return mapped;
+                 });
+
             Field<DroidType>(
                 "hero",
                 arguments: new QueryArguments(

@@ -11,7 +11,7 @@ class MenuSearchBar extends Component{
         // }
         return (
             <Menu.Item>
-                <Image size='mini' src={src} link='true'/>
+                <Image size='mini' src={src}/>
             </Menu.Item>
         );
     }

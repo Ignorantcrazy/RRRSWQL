@@ -16,6 +16,10 @@ namespace QL.Data.EntityFramework
         public DbSet<Droid> Droids { get; set; }
         public DbSet<Friend> Friends { get; set; }
 
+        public DbSet<Articale> Articles { get; set; }
+        public DbSet<Classification> Classifications { get; set; }
+        public DbSet<User> Users { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //modelBuilder.Entity<Droid>().ToTable("Course");
@@ -26,6 +30,15 @@ namespace QL.Data.EntityFramework
             modelBuilder.Entity<Friend>().Property(e => e.Id).ValueGeneratedNever();
 
             modelBuilder.Entity<Friend>().HasOne(x => x.Droid).WithMany(x => x.Friends);
+
+            modelBuilder.Entity<Articale>().HasKey("Id");
+            modelBuilder.Entity<Articale>().Property(e => e.Id).ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Classification>().HasKey("Id");
+            modelBuilder.Entity<Classification>().Property(e => e.Id).ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<User>().HasKey("Id");
+            modelBuilder.Entity<User>().Property(e => e.Id).ValueGeneratedOnAdd();
             //modelBuilder.Entity<Droid>().HasMany(e => e.Friends).WithOne(j => j.Droids);
         }
     }

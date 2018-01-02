@@ -1,12 +1,16 @@
 import React,{Component} from 'react';
+import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {Menu} from 'semantic-ui-react';
 
 class MenuLinkItem extends Component{
     render(){
+        var linkStr = '/'+this.props.menuItem.name;
         return (
             <Menu.Item name={this.props.menuItem.name} active={this.props.menuItem.active} link='true'>
-                {this.props.menuItem.text}
+                <Link to={linkStr}>
+                    {this.props.menuItem.text}
+                </Link>
             </Menu.Item>
         );
     }

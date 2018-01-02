@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {Button,Icon,Image as ImageComponent,Item,Label} from 'semantic-ui-react';
+import {Button,Icon,Item,Label} from 'semantic-ui-react';
 
 class Articale extends Component{
     render(){
@@ -8,12 +8,12 @@ class Articale extends Component{
                 <Item>
                     <Item.Image src='/assets/images/wireframe/image.png' />
                     <Item.Content>
-                        <Item.Header as='a'>My Neighbor Totoro</Item.Header>
+                        <Item.Header as='a'>{this.props.articale.Title}</Item.Header>
                         <Item.Meta>
                         <span className='cinema'>IFC Cinema</span>
                         </Item.Meta>
                         <Item.Description>
-                            <ImageComponent src='/assets/images/wireframe/short-paragraph.png' />
+                            {this.props.articale.Content}
                         </Item.Description>
                         <Item.Extra>
                         <Button primary floated='right'>
